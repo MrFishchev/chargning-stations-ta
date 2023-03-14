@@ -1,4 +1,4 @@
-import express, { Application, Request, Response } from 'express'
+import express, { Application, NextFunction, Request, Response } from 'express'
 import router from './api/routes'
 import dbInit from './db/init'
 
@@ -12,16 +12,12 @@ export const get = () => {
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))
 
-  app.get('/', async (request: Request, response: Response) => {
-    return response
-      .status(200)
-      .send(
-        `Welcome to the cookbook API! \n Endpoints are available at http://localhost:${port}/api/v1`
-      )
-  })
-
   app.use('/api/v1', router)
 
+  app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
+    console.log(`Request is failed: ${error.message}`)
+    res.status(500).send(`Unexpected error: ${error.message}`)
+  })
   return app
 }
 
