@@ -1,25 +1,25 @@
 import Company from '../models/Company'
 import { CompanyInput, CompanyOutput } from '../models/Company'
-import { GetAllByParentFilter } from './filters/companies'
+import { GetAllCompaniesFilter } from './filters/companies'
+import { NotFoundException } from '../../exceptions'
+import { Op } from 'sequelize'
 
 export const getAll = async (
-  filter?: GetAllByParentFilter
+  filter?: GetAllCompaniesFilter
 ): Promise<CompanyOutput[]> => {
-  if (filter) {
-    return Company.findAll({
-      where: {
-        parentCompany: filter?.parentCompany
-      }
-    })
-  }
-
-  return Company.findAll()
+  return Company.findAll({
+    where: {
+      ...(filter?.parentCompany && {
+        parentCompany: { [Op.eq]: filter.parentCompany }
+      })
+    }
+  })
 }
 
 export const getById = async (id: number): Promise<CompanyOutput> => {
   const company = await Company.findByPk(id)
   if (!company) {
-    throw new Error('Not Found')
+    throw new NotFoundException()
   }
   return company
 }
@@ -35,7 +35,7 @@ export const update = async (
 ): Promise<CompanyOutput> => {
   const company = await Company.findByPk(id)
   if (!company) {
-    throw new Error('Not Found')
+    throw new NotFoundException()
   }
 
   const updatedCompany = await (company as Company).update(payload)
