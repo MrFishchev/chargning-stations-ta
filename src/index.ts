@@ -1,6 +1,7 @@
 import express, { Application, NextFunction, Request, Response } from 'express'
 import router from './api/routes'
 import dbInit from './db/init'
+import { NotFoundException } from './exceptions'
 
 dbInit()
 
@@ -14,6 +15,15 @@ export const get = () => {
 
   app.use('/api/v1', router)
 
+  // Not Found
+  app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
+    if (error instanceof NotFoundException) {
+      return res.status(404).send('Not Found')
+    }
+    next(error)
+  })
+
+  // Unexpected errors
   app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
     console.log(`Request is failed: ${error.message}`)
     res.status(500).send(`Unexpected error: ${error.message}`)
