@@ -1,19 +1,17 @@
 import { Router, Request, Response, NextFunction } from 'express'
-import * as companyController from '../controllers/company'
+import * as stationTypeController from '../controllers/stationType'
 import {
-  CreateCompanyDto,
-  FilterCompaniesDto,
-  UpdateCompanyDto
-} from '../dto/company.dto'
+  CreateStationTypeDto,
+  UpdateStationTypeDto
+} from '../dto/stationType.dto'
 
-const companiesRouter = Router()
+const stationTypesRouter = Router()
 
-companiesRouter.get(
+stationTypesRouter.get(
   '/',
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const filter: FilterCompaniesDto = request.query
-      const result = await companyController.getAll(filter)
+      const result = await stationTypeController.getAll()
       return response.status(200).send(result)
     } catch (error) {
       next(error)
@@ -21,12 +19,12 @@ companiesRouter.get(
   }
 )
 
-companiesRouter.get(
+stationTypesRouter.get(
   '/:id',
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = Number(request.params.id)
-      const result = await companyController.getById(id)
+      const result = await stationTypeController.getById(id)
       return response.status(200).send(result)
     } catch (err) {
       next(err)
@@ -34,12 +32,12 @@ companiesRouter.get(
   }
 )
 
-companiesRouter.post(
+stationTypesRouter.post(
   '/',
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const payload: CreateCompanyDto = request.body
-      const result = await companyController.create(payload)
+      const payload: CreateStationTypeDto = request.body
+      const result = await stationTypeController.create(payload)
       return response.status(201).send(result)
     } catch (err) {
       next(err)
@@ -47,14 +45,14 @@ companiesRouter.post(
   }
 )
 
-companiesRouter.put(
+stationTypesRouter.put(
   '/:id',
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = Number(request.params.id)
-      const payload: UpdateCompanyDto = request.body
+      const payload: UpdateStationTypeDto = request.body
 
-      const result = await companyController.update(id, payload)
+      const result = await stationTypeController.update(id, payload)
       return response.status(200).send(result)
     } catch (err) {
       next(err)
@@ -62,12 +60,12 @@ companiesRouter.put(
   }
 )
 
-companiesRouter.delete(
+stationTypesRouter.delete(
   '/:id',
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = Number(request.params.id)
-      const result = await companyController.deleteById(id)
+      const result = await stationTypeController.deleteById(id)
       return response.status(200).send(result)
     } catch (err) {
       next(err)
@@ -75,4 +73,4 @@ companiesRouter.delete(
   }
 )
 
-export default companiesRouter
+export default stationTypesRouter

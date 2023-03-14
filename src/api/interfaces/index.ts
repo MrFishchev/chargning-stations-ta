@@ -1,3 +1,5 @@
 import { Company } from './company.interface'
+import { Station } from './station.interface'
+import { StationType } from './stationType.interface'
 
-export { Company }
+export { Company, Station, StationType }

@@ -33,17 +33,19 @@ Company.init(
     parentCompany: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'Companies',
+        model: Company,
         key: 'id'
       },
       allowNull: true
     }
   },
   {
-    sequelize: sequelizeConnection
+    sequelize: sequelizeConnection,
+    modelName: 'Company',
+    tableName: 'Companies'
   }
 )
 
-Company.hasMany(Company)
+// Company.hasMany(Company)
 
 export default Company
