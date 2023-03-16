@@ -1,5 +1,5 @@
 import * as stationTypeDal from '../../db/dal/stationTypes'
-import { StationType } from '../../db/models/StationType'
+import { StationType } from '../../db/models'
 
 export const getAll = (): Promise<StationType[]> => {
   return stationTypeDal.getAll()

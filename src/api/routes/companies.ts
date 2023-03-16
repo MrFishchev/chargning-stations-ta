@@ -1,7 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express'
 import * as companyController from '../controllers/company'
 import { GetAllCompaniesFilter } from '../../db/filters/companies'
-import { Company } from '../../db/models/Company'
+import { Company } from '../../db/models'
 
 const companiesRouter = Router()
 

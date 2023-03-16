@@ -1,6 +1,6 @@
 import { GetAllStationsFilter } from '../../db/filters/stations'
 import * as stationDal from '../../db/dal/stations'
-import { Station } from '../../db/models/Station'
+import { Station } from '../../db/models'
 
 export const getAll = (filter?: GetAllStationsFilter): Promise<Station[]> => {
   return stationDal.getAll(filter)

@@ -1,7 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express'
 import * as stationController from '../controllers/station'
 import { GetAllStationsFilter } from '../../db/filters/stations'
-import { Station } from '../../db/models/Station'
+import { Station } from '../../db/models'
 
 const stationsRouter = Router()
 

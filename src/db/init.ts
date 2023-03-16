@@ -1,7 +1,5 @@
 import dbConnection from './config'
-import { Company } from './models/Company'
-import { Station } from './models/Station'
-import { StationType } from './models/StationType'
+import { Company, Station, StationType } from './models'
 
 const isDev = process.env.NODE_ENV === 'development'
 

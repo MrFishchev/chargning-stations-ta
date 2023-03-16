@@ -1,7 +1,6 @@
 import * as service from '../../services/CompanyService'
 import { GetAllCompaniesFilter } from '../../../db/filters/companies'
-import { Company } from '../../../db/models/Company'
-import { Station } from '../../../db/models/Station'
+import { Company, Station } from '../../../db/models'
 
 export const getAll = async (
   filter?: GetAllCompaniesFilter

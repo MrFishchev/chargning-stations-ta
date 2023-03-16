@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express'
 import * as stationTypeController from '../controllers/stationType'
-import { StationType } from '../../db/models/StationType'
+import { StationType } from '../../db/models'
 
 const stationTypesRouter = Router()
 

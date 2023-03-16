@@ -1,9 +1,7 @@
 import { GetAllCompaniesFilter } from '../filters/companies'
 import { NotFoundException } from '../../exceptions'
-import { Company } from '../models/Company'
 import { Op } from 'sequelize'
-import { Station } from '../models/Station'
-import { StationType } from '../models/StationType'
+import { Station, StationType, Company } from '../models'
 
 export const getAll = async (
   filter?: GetAllCompaniesFilter
