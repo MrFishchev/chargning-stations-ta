@@ -1,46 +1,42 @@
-import Company from './models/Company'
-import StationType, { StationTypeInput } from './models/StationType'
-import Station, { StationInput } from './models/Station'
-import { CompanyInput } from './models/Company'
+import dbConnection from './config'
+import { Company } from './models/Company'
+import { Station } from './models/Station'
+import { StationType } from './models/StationType'
 
 const isDev = process.env.NODE_ENV === 'development'
 
 const dbInit = async () => {
-  await StationType.sync({ alter: isDev })
-  await Company.sync({ alter: isDev })
-  await Station.sync({ alter: isDev })
-
-  isDev ? DbSeed() : Promise.resolve()
+  await dbConnection.sync({ alter: isDev })
+  if (isDev) {
+    SeedData()
+  }
 }
 
-async function DbSeed(): Promise<void> {
-  const companies: CompanyInput[] = [
-    { id: 1, name: 'Company 1' },
-    { id: 2, name: 'Company 2', parentCompany: 1 },
-    { id: 3, name: 'Company 3', parentCompany: 1 }
-  ]
+async function SeedData(): Promise<void> {
+  const companies = Company.bulkCreate(
+    [
+      { name: 'Company 1' },
+      { name: 'Company 2', parentCompanyId: 1 },
+      { name: 'Company 3', parentCompanyId: 1 }
+    ],
+    { updateOnDuplicate: ['name', 'parentCompanyId'] }
+  )
+  const stationTypes = StationType.bulkCreate(
+    [{ name: 'Station Type 1', maxPower: 10 }],
+    { updateOnDuplicate: ['name', 'maxPower'] }
+  )
+  await Promise.all([companies, stationTypes])
 
-  const stationTypes: StationTypeInput[] = [
-    { id: 1, name: 'Station Type 1', maxPower: 10 },
-    { id: 2, name: 'Station Type 2', maxPower: 20 }
-  ]
-
-  const stations: StationInput[] = [
-    { id: 1, name: 'Station 1', type: 1, company: 1 },
-    { id: 2, name: 'Station 2', type: 2, company: 1 },
-
-    { id: 3, name: 'Station 3', type: 1, company: 2 },
-    { id: 4, name: 'Station 4', type: 2, company: 2 },
-
-    { id: 5, name: 'Station 5', type: 1, company: 3 },
-    { id: 6, name: 'Station 6', type: 2, company: 3 }
-  ]
-
-  await Promise.all([
-    ...companies.map((x) => Company.upsert(x)),
-    ...stationTypes.map((x) => StationType.upsert(x)),
-    ...stations.map((x) => Station.upsert(x))
-  ])
+  await Station.bulkCreate(
+    [
+      { name: 'Station 1', companyId: 3, typeId: 1 },
+      { name: 'Station 2', companyId: 2, typeId: 1 },
+      { name: 'Station 3', companyId: 2, typeId: 1 },
+      { name: 'Station 4', companyId: 3, typeId: 1 },
+      { name: 'Station 5', companyId: 1, typeId: 1 }
+    ],
+    { updateOnDuplicate: ['name', 'companyId', 'typeId'] }
+  )
 }
 
 export default dbInit

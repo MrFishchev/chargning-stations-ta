@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express'
 import * as companyController from '../controllers/company'
-import { FilterCompaniesDto } from '../dto/company.dto'
+import { GetAllCompaniesFilter } from '../../db/filters/companies'
 import { Company } from '../../db/models/Company'
 
 const companiesRouter = Router()
@@ -9,7 +9,7 @@ companiesRouter.get(
   '/',
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const filter: FilterCompaniesDto = request.query
+      const filter: GetAllCompaniesFilter = request.query
       const result = await companyController.getAll(filter)
       return response.status(200).send(result)
     } catch (error) {

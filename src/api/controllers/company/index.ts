@@ -1,9 +1,9 @@
 import * as service from '../../services/CompanyService'
-import { FilterCompaniesDto } from '../../dto/company.dto'
+import { GetAllCompaniesFilter } from '../../../db/filters/companies'
 import { Company } from '../../../db/models/Company'
 
 export const getAll = async (
-  filter?: FilterCompaniesDto
+  filter?: GetAllCompaniesFilter
 ): Promise<Company[]> => {
   return await service.getAll(filter)
 }

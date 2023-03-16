@@ -1,25 +1,23 @@
-import { GetAllStationsFilter } from '../../db/dal/filters/stations'
+import { GetAllStationsFilter } from '../../db/filters/stations'
 import * as stationDal from '../../db/dal/stations'
-import { StationInput, StationOutput } from '../../db/models/Station'
+import { Station } from '../../db/models/Station'
 
-export const getAll = (
-  filter?: GetAllStationsFilter
-): Promise<StationOutput[]> => {
+export const getAll = (filter?: GetAllStationsFilter): Promise<Station[]> => {
   return stationDal.getAll(filter)
 }
 
-export const getById = (id: number): Promise<StationOutput> => {
+export const getById = (id: number): Promise<Station> => {
   return stationDal.getById(id)
 }
 
-export const create = (payload: StationInput): Promise<StationOutput> => {
+export const create = (payload: Station): Promise<Station> => {
   return stationDal.create(payload)
 }
 
 export const update = (
   id: number,
-  payload: Partial<StationInput>
-): Promise<StationOutput> => {
+  payload: Partial<Station>
+): Promise<Station> => {
   return stationDal.update(id, payload)
 }
 

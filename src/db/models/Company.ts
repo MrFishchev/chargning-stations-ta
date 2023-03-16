@@ -11,7 +11,7 @@ import {
   attributes: ['id', 'name']
 }))
 @Table
-export class Company extends Model<Company> {
+export class Company extends Model {
   @Unique
   @Column
   name!: string

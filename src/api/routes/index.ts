@@ -7,6 +7,6 @@ const router = Router()
 
 router.use('/companies', companiesRouter)
 router.use('/stations', stationsRouter)
-router.use('/stationtypes', stationTypesRouter)
+router.use('/station-types', stationTypesRouter)
 
 export default router

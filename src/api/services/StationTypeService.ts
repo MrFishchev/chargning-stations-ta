@@ -1,27 +1,22 @@
 import * as stationTypeDal from '../../db/dal/stationTypes'
-import {
-  StationTypeInput,
-  StationTypeOutput
-} from '../../db/models/StationType'
+import { StationType } from '../../db/models/StationType'
 
-export const getAll = (): Promise<StationTypeOutput[]> => {
+export const getAll = (): Promise<StationType[]> => {
   return stationTypeDal.getAll()
 }
 
-export const getById = (id: number): Promise<StationTypeOutput> => {
+export const getById = (id: number): Promise<StationType> => {
   return stationTypeDal.getById(id)
 }
 
-export const create = (
-  payload: StationTypeInput
-): Promise<StationTypeOutput> => {
+export const create = (payload: StationType): Promise<StationType> => {
   return stationTypeDal.create(payload)
 }
 
 export const update = (
   id: number,
-  payload: Partial<StationTypeInput>
-): Promise<StationTypeOutput> => {
+  payload: Partial<StationType>
+): Promise<StationType> => {
   return stationTypeDal.update(id, payload)
 }
 

@@ -1,30 +1,23 @@
 import * as service from '../../services/StationTypeService'
-import {
-  CreateStationTypeDto,
-  UpdateStationTypeDto
-} from '../../dto/stationType.dto'
-import { StationType } from '../../interfaces'
-import * as mapper from './mapper'
+import { StationType } from '../../../db/models/StationType'
 
 export const getAll = async (): Promise<StationType[]> => {
-  return (await service.getAll()).map(mapper.toStationType)
+  return await service.getAll()
 }
 
 export const getById = async (id: number): Promise<StationType> => {
-  return mapper.toStationType(await service.getById(id))
+  return await service.getById(id)
 }
 
-export const create = async (
-  payload: CreateStationTypeDto
-): Promise<StationType> => {
-  return mapper.toStationType(await service.create(payload))
+export const create = async (payload: StationType): Promise<StationType> => {
+  return await service.create(payload)
 }
 
 export const update = async (
   id: number,
-  payload: UpdateStationTypeDto
+  payload: StationType
 ): Promise<StationType> => {
-  return mapper.toStationType(await service.update(id, payload))
+  return await service.update(id, payload)
 }
 
 export const deleteById = async (id: number): Promise<boolean> => {

@@ -1,12 +1,11 @@
-import StationType from '../models/StationType'
-import { StationTypeInput, StationTypeOutput } from '../models/StationType'
+import { StationType } from '../models/StationType'
 import { NotFoundException } from '../../exceptions'
 
-export const getAll = async (): Promise<StationTypeOutput[]> => {
+export const getAll = async (): Promise<StationType[]> => {
   return StationType.findAll()
 }
 
-export const getById = async (id: number): Promise<StationTypeOutput> => {
+export const getById = async (id: number): Promise<StationType> => {
   const stationType = await StationType.findByPk(id)
   if (!stationType) {
     throw new NotFoundException()
@@ -14,17 +13,15 @@ export const getById = async (id: number): Promise<StationTypeOutput> => {
   return stationType
 }
 
-export const create = async (
-  payload: StationTypeInput
-): Promise<StationTypeOutput> => {
-  const stationType = await StationType.create(payload)
+export const create = async (payload: StationType): Promise<StationType> => {
+  const stationType = await StationType.create({ ...payload })
   return stationType
 }
 
 export const update = async (
   id: number,
-  payload: Partial<StationTypeInput>
-): Promise<StationTypeOutput> => {
+  payload: Partial<StationType>
+): Promise<StationType> => {
   const stationType = await StationType.findByPk(id)
   if (!stationType) {
     throw new NotFoundException()

@@ -1,9 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express'
 import * as stationTypeController from '../controllers/stationType'
-import {
-  CreateStationTypeDto,
-  UpdateStationTypeDto
-} from '../dto/stationType.dto'
+import { StationType } from '../../db/models/StationType'
 
 const stationTypesRouter = Router()
 
@@ -36,7 +33,7 @@ stationTypesRouter.post(
   '/',
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const payload: CreateStationTypeDto = request.body
+      const payload: StationType = request.body
       const result = await stationTypeController.create(payload)
       return response.status(201).send(result)
     } catch (err) {
@@ -50,7 +47,7 @@ stationTypesRouter.put(
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = Number(request.params.id)
-      const payload: UpdateStationTypeDto = request.body
+      const payload: StationType = request.body
 
       const result = await stationTypeController.update(id, payload)
       return response.status(200).send(result)

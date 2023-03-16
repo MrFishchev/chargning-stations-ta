@@ -1,5 +1,5 @@
 import * as companyDal from '../../db/dal/companies'
-import { GetAllCompaniesFilter } from '../../db/dal/filters/companies'
+import { GetAllCompaniesFilter } from '../../db/filters/companies'
 import { Company } from '../../db/models/Company'
 
 export const getAll = (filter?: GetAllCompaniesFilter): Promise<Company[]> => {

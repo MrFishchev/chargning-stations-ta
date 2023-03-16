@@ -1,4 +1,4 @@
-import { GetAllCompaniesFilter } from './filters/companies'
+import { GetAllCompaniesFilter } from '../filters/companies'
 import { NotFoundException } from '../../exceptions'
 import { Company } from '../models/Company'
 import { Op } from 'sequelize'
@@ -27,7 +27,7 @@ export const getById = async (id: number): Promise<Company> => {
 }
 
 export const create = async (payload: Company): Promise<Company> => {
-  const company = Company.create(payload)
+  const company = Company.create({ ...payload })
   return company
 }
 
