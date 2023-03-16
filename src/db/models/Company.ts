@@ -1,51 +1,27 @@
-import { DataTypes, Model, Optional } from 'sequelize'
-import sequelizeConnection from '../config'
+import {
+  Table,
+  Model,
+  DefaultScope,
+  Column,
+  BelongsTo,
+  Unique
+} from 'sequelize-typescript'
 
-interface CompanyAttributes {
-  id: number
-  name: string
-  parentCompany: number | undefined
-}
+@DefaultScope(() => ({
+  attributes: ['id', 'name']
+}))
+@Table
+export class Company extends Model<Company> {
+  @Unique
+  @Column
+  name!: string
 
-export type CompanyInput = Optional<CompanyAttributes, 'id' | 'parentCompany'>
-export type CompanyOutput = Required<CompanyAttributes>
-
-class Company
-  extends Model<CompanyAttributes, CompanyInput>
-  implements CompanyAttributes
-{
-  public id!: number
-  public name!: string
-  public parentCompany: number | undefined
-}
-
-Company.init(
-  {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true
-    },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    parentCompany: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: Company,
-        key: 'id'
-      },
+  @BelongsTo(() => Company, {
+    foreignKey: {
+      name: 'parentCompanyId',
       allowNull: true
-    }
-  },
-  {
-    sequelize: sequelizeConnection,
-    modelName: 'Company',
-    tableName: 'Companies'
-  }
-)
-
-// Company.hasMany(Company)
-
-export default Company
+    },
+    as: 'parentCompany'
+  })
+  parentCompany?: Company
+}

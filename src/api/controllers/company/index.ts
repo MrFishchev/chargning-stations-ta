@@ -1,31 +1,26 @@
 import * as service from '../../services/CompanyService'
-import {
-  CreateCompanyDto,
-  FilterCompaniesDto,
-  UpdateCompanyDto
-} from '../../dto/company.dto'
-import { Company } from '../../interfaces'
-import * as mapper from './mapper'
+import { FilterCompaniesDto } from '../../dto/company.dto'
+import { Company } from '../../../db/models/Company'
 
 export const getAll = async (
   filter?: FilterCompaniesDto
 ): Promise<Company[]> => {
-  return (await service.getAll(filter)).map(mapper.toCompany)
+  return await service.getAll(filter)
 }
 
 export const getById = async (id: number): Promise<Company> => {
-  return mapper.toCompany(await service.getById(id))
+  return await service.getById(id)
 }
 
-export const create = async (payload: CreateCompanyDto): Promise<Company> => {
-  return mapper.toCompany(await service.create(payload))
+export const create = async (payload: Company): Promise<Company> => {
+  return await service.create(payload)
 }
 
 export const update = async (
   id: number,
-  payload: UpdateCompanyDto
+  payload: Company
 ): Promise<Company> => {
-  return mapper.toCompany(await service.update(id, payload))
+  return await service.update(id, payload)
 }
 
 export const deleteById = async (id: number): Promise<boolean> => {

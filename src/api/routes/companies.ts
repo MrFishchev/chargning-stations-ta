@@ -1,10 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express'
 import * as companyController from '../controllers/company'
-import {
-  CreateCompanyDto,
-  FilterCompaniesDto,
-  UpdateCompanyDto
-} from '../dto/company.dto'
+import { FilterCompaniesDto } from '../dto/company.dto'
+import { Company } from '../../db/models/Company'
 
 const companiesRouter = Router()
 
@@ -38,7 +35,7 @@ companiesRouter.post(
   '/',
   async (request: Request, response: Response, next: NextFunction) => {
     try {
-      const payload: CreateCompanyDto = request.body
+      const payload: Company = request.body
       const result = await companyController.create(payload)
       return response.status(201).send(result)
     } catch (err) {
@@ -52,7 +49,7 @@ companiesRouter.put(
   async (request: Request, response: Response, next: NextFunction) => {
     try {
       const id = Number(request.params.id)
-      const payload: UpdateCompanyDto = request.body
+      const payload: Company = request.body
 
       const result = await companyController.update(id, payload)
       return response.status(200).send(result)
