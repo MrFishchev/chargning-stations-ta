@@ -4,8 +4,10 @@ import {
   DefaultScope,
   Column,
   BelongsTo,
-  Unique
+  Unique,
+  HasMany
 } from 'sequelize-typescript'
+import { Station } from './Station'
 
 @DefaultScope(() => ({
   attributes: ['id', 'name']
@@ -24,4 +26,7 @@ export class Company extends Model {
     as: 'parentCompany'
   })
   parentCompany?: Company
+
+  @HasMany(() => Station, { foreignKey: 'companyId' })
+  stations?: Station[]
 }

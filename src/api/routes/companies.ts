@@ -31,6 +31,19 @@ companiesRouter.get(
   }
 )
 
+companiesRouter.get(
+  '/:id/stations',
+  async (request: Request, response: Response, next: NextFunction) => {
+    try {
+      const id = Number(request.params.id)
+      const result = await companyController.getCompanyStations(id)
+      return response.status(200).send(result)
+    } catch (err) {
+      next(err)
+    }
+  }
+)
+
 companiesRouter.post(
   '/',
   async (request: Request, response: Response, next: NextFunction) => {

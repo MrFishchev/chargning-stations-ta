@@ -2,6 +2,8 @@ import { GetAllCompaniesFilter } from '../filters/companies'
 import { NotFoundException } from '../../exceptions'
 import { Company } from '../models/Company'
 import { Op } from 'sequelize'
+import { Station } from '../models/Station'
+import { StationType } from '../models/StationType'
 
 export const getAll = async (
   filter?: GetAllCompaniesFilter
@@ -12,18 +14,34 @@ export const getAll = async (
         parentCompanyId: { [Op.eq]: filter.parentCompany }
       })
     },
-    include: [{ model: Company, attributes: ['id', 'name'] }]
+    include: [Company]
   })
 }
 
 export const getById = async (id: number): Promise<Company> => {
   const company = await Company.findByPk(id, {
-    include: [{ model: Company, attributes: ['id', 'name'] }]
+    include: [Company]
   })
   if (!company) {
     throw new NotFoundException()
   }
   return company
+}
+
+export const getCompanyStations = async (id: number): Promise<Station[]> => {
+  const companyData = await Company.findByPk(id, {
+    include: [
+      {
+        model: Station,
+        include: [{ model: StationType, attributes: ['maxPower'] }]
+      }
+    ]
+  })
+  if (!companyData) {
+    throw new NotFoundException()
+  }
+
+  return companyData.stations ?? []
 }
 
 export const create = async (payload: Company): Promise<Company> => {

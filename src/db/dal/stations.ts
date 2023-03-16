@@ -10,22 +10,16 @@ export const getAll = async (
 ): Promise<Station[]> => {
   return Station.findAll({
     where: {
-      ...(filter?.company && { company: { [Op.eq]: filter.company } }),
-      ...(filter?.type && { type: { [Op.eq]: filter.type } })
+      ...(filter?.company && { companyId: { [Op.eq]: filter.company } }),
+      ...(filter?.type && { typeId: { [Op.eq]: filter.type } })
     },
-    include: [
-      { model: Company, attributes: ['id', 'name'] },
-      { model: StationType, attributes: ['id', 'name', 'maxPower'] }
-    ]
+    include: [Company, StationType]
   })
 }
 
 export const getById = async (id: number): Promise<Station> => {
   const station = await Station.findByPk(id, {
-    include: [
-      { model: Company, attributes: ['id', 'name'] },
-      { model: StationType, attributes: ['id', 'name', 'maxPower'] }
-    ]
+    include: [Company, StationType]
   })
   if (!station) {
     throw new NotFoundException()

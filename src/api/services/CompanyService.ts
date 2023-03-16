@@ -1,6 +1,7 @@
 import * as companyDal from '../../db/dal/companies'
 import { GetAllCompaniesFilter } from '../../db/filters/companies'
 import { Company } from '../../db/models/Company'
+import { Station } from '../../db/models/Station'
 
 export const getAll = (filter?: GetAllCompaniesFilter): Promise<Company[]> => {
   return companyDal.getAll(filter)
@@ -8,6 +9,10 @@ export const getAll = (filter?: GetAllCompaniesFilter): Promise<Company[]> => {
 
 export const getById = (id: number): Promise<Company> => {
   return companyDal.getById(id)
+}
+
+export const getCompanyStations = (id: number): Promise<Station[]> => {
+  return companyDal.getCompanyStations(id)
 }
 
 export const create = (payload: Company): Promise<Company> => {

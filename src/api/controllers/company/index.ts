@@ -1,6 +1,7 @@
 import * as service from '../../services/CompanyService'
 import { GetAllCompaniesFilter } from '../../../db/filters/companies'
 import { Company } from '../../../db/models/Company'
+import { Station } from '../../../db/models/Station'
 
 export const getAll = async (
   filter?: GetAllCompaniesFilter
@@ -10,6 +11,10 @@ export const getAll = async (
 
 export const getById = async (id: number): Promise<Company> => {
   return await service.getById(id)
+}
+
+export const getCompanyStations = async (id: number): Promise<Station[]> => {
+  return await service.getCompanyStations(id)
 }
 
 export const create = async (payload: Company): Promise<Company> => {
