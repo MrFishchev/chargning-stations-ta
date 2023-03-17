@@ -14,6 +14,10 @@ export const getCompanyStations = (id: number): Promise<Station[]> => {
   return companyDal.getCompanyStations(id)
 }
 
+export const getAllOwners = (id: number): Promise<Company[]> => {
+  return companyDal.getAllOwners(id)
+}
+
 export const create = (payload: Company): Promise<Company> => {
   return companyDal.create(payload)
 }

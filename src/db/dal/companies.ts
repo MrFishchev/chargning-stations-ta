@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-condition */
 import { GetAllCompaniesFilter } from '../filters/companies'
 import { NotFoundException } from '../../exceptions'
 import { Op } from 'sequelize'
@@ -40,6 +41,38 @@ export const getCompanyStations = async (id: number): Promise<Station[]> => {
   }
 
   return companyData.stations ?? []
+}
+
+export const getAllOwners = async (id: number): Promise<Company[]> => {
+  // Better to do recursive SQL query
+  const company = await Company.findByPk(id, { include: [Company] })
+  if (company === null) {
+    throw new NotFoundException()
+  }
+
+  if (company.parentCompany === null) {
+    return []
+  }
+
+  const parents: Company[] = []
+  let currentCompanyId = company.parentCompany?.id
+  do {
+    const parent = await Company.findByPk(currentCompanyId, {
+      include: [Company]
+    })
+
+    if (parent === null) {
+      break
+    }
+    parents.push(parent)
+
+    if (parent?.parentCompany === null) {
+      break
+    }
+    currentCompanyId = parent?.parentCompany?.id
+  } while (true)
+
+  return parents
 }
 
 export const create = async (payload: Company): Promise<Company> => {
