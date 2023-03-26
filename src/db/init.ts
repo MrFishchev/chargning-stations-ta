@@ -27,11 +27,11 @@ async function SeedData(): Promise<void> {
 
   await Station.bulkCreate(
     [
-      { name: 'Station 1', companyId: 3, typeId: 1 },
-      { name: 'Station 2', companyId: 2, typeId: 1 },
-      { name: 'Station 3', companyId: 2, typeId: 1 },
-      { name: 'Station 4', companyId: 3, typeId: 1 },
-      { name: 'Station 5', companyId: 1, typeId: 1 }
+      { name: 'Station 1', companyId: 3, typeId: 1, isCharging: false },
+      { name: 'Station 2', companyId: 2, typeId: 1, isCharging: false },
+      { name: 'Station 3', companyId: 2, typeId: 1, isCharging: false },
+      { name: 'Station 4', companyId: 3, typeId: 1, isCharging: false },
+      { name: 'Station 5', companyId: 1, typeId: 1, isCharging: false }
     ],
     { updateOnDuplicate: ['name', 'companyId', 'typeId'] }
   )

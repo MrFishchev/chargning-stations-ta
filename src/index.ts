@@ -2,6 +2,7 @@ import express, { Application, NextFunction, Request, Response } from 'express'
 import router from './api/routes'
 import dbInit from './db/init'
 import { NotFoundException } from './exceptions'
+import bodyParser from 'body-parser'
 
 dbInit()
 
@@ -12,6 +13,7 @@ export const get = () => {
 
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))
+  app.use(bodyParser.text())
 
   app.use('/api/v1', router)
 

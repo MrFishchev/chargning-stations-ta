@@ -24,3 +24,19 @@ export const update = (
 export const deleteById = (id: number): Promise<boolean> => {
   return stationDal.deleteById(id)
 }
+
+export const startCharging = (id: number): Promise<number> =>
+  setCharging(id, true)
+
+export const stopCharging = (id: number): Promise<number> =>
+  setCharging(id, false)
+
+const setCharging = async (
+  id: number,
+  isCharging: boolean
+): Promise<number> => {
+  const station = await stationDal.getById(id)
+  station.isCharging = isCharging
+  const result = await station.save()
+  return new Date(result.updatedAt ?? Date.now()).valueOf()
+}

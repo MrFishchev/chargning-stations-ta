@@ -23,7 +23,7 @@ It is a test assignment for Node.js engineer. Design an API for an automated cha
 ## Trade-offs
 * Simple exception handling, only in routes
 * No logging
-* No unit-tests (time consuming), only API tests
+* No tests
 * No Swagger
 * Docstring only for controllers (as an example)
 * There is no Cascade or Paranoic (soft) deletions

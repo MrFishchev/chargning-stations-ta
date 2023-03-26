@@ -9,7 +9,8 @@ export const getAll = async (
   return Station.findAll({
     where: {
       ...(filter?.company && { companyId: { [Op.eq]: filter.company } }),
-      ...(filter?.type && { typeId: { [Op.eq]: filter.type } })
+      ...(filter?.type && { typeId: { [Op.eq]: filter.type } }),
+      ...(filter?.isCharging && { isCharging: { [Op.eq]: filter.isCharging } })
     },
     include: [Company, StationType]
   })
@@ -26,6 +27,7 @@ export const getById = async (id: number): Promise<Station> => {
 }
 
 export const create = async (payload: Station): Promise<Station> => {
+  payload.isCharging = false
   const station = await Station.create({ ...payload })
   return station
 }

@@ -10,13 +10,19 @@ import { StationType } from './StationType'
 import { Company } from './Company'
 
 @DefaultScope(() => ({
-  attributes: ['id', 'name']
+  attributes: ['id', 'name', 'isCharging']
 }))
 @Table
 export class Station extends Model {
   @Unique
   @Column
   name!: string
+
+  @Column
+  maxPower!: number
+
+  @Column
+  isCharging!: boolean
 
   @BelongsTo(() => StationType, {
     foreignKey: {
@@ -35,7 +41,4 @@ export class Station extends Model {
     as: 'company'
   })
   company?: Company
-
-  @Column
-  maxPower!: number
 }
