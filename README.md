@@ -88,3 +88,127 @@ npm run start
   "maxPower": 10
 }
 ```
+
+# Part 2 - Script Executor
+
+> Note: Steps Begin and End are placeholders with hardcoded payload
+
+
+Request to *api/v1/charging/execute*:
+
+```
+Begin
+Start station 1
+Start station 2
+Wait 2
+Stop station 1
+Stop station 2
+End
+```
+
+Response:
+
+```json
+{
+    "steps": [
+        {
+            "step": "Begin",
+            "timestamp": 1679835553964,
+            "companies": [],
+            "totalChargingPower": 0,
+            "totalChargingStations": []
+        },
+        {
+            "step": "Start station 1",
+            "timestamp": 1679835554007,
+            "companies": [
+                {
+                    "id": 1,
+                    "chargingStations": [
+                        1
+                    ],
+                    "chargingPower": 10
+                },
+                {
+                    "id": 3,
+                    "chargingStations": [
+                        1
+                    ],
+                    "chargingPower": 10
+                }
+            ],
+            "totalChargingStations": [
+                1
+            ],
+            "totalChargingPower": 10
+        },
+        {
+            "step": "Start station 2",
+            "timestamp": 1679835554037,
+            "companies": [
+                {
+                    "id": 1,
+                    "chargingStations": [
+                        2
+                    ],
+                    "chargingPower": 10
+                },
+                {
+                    "id": 2,
+                    "chargingStations": [
+                        2
+                    ],
+                    "chargingPower": 10
+                }
+            ],
+            "totalChargingStations": [
+                2
+            ],
+            "totalChargingPower": 10
+        },
+        {
+            "step": "Stop station 1",
+            "timestamp": 1679835556066,
+            "companies": [
+                {
+                    "id": 1,
+                    "chargingStations": [],
+                    "chargingPower": 0
+                },
+                {
+                    "id": 3,
+                    "chargingStations": [],
+                    "chargingPower": 0
+                }
+            ],
+            "totalChargingStations": [],
+            "totalChargingPower": 0
+        },
+        {
+            "step": "Stop station 2",
+            "timestamp": 1679835556085,
+            "companies": [
+                {
+                    "id": 1,
+                    "chargingStations": [],
+                    "chargingPower": 0
+                },
+                {
+                    "id": 2,
+                    "chargingStations": [],
+                    "chargingPower": 0
+                }
+            ],
+            "totalChargingStations": [],
+            "totalChargingPower": 0
+        },
+        {
+            "step": "End",
+            "timestamp": 1679835556101,
+            "companies": [],
+            "totalChargingPower": 0,
+            "totalChargingStations": []
+        }
+    ]
+}
+```
